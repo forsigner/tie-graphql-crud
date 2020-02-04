@@ -1,0 +1,33 @@
+{
+  "name": "tie-graphql-crud",
+  "version": "0.0.0",
+  "description": "GraphQL Crud for Tie",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsnl dev",
+    "build": "tsnl build",
+    "test": "tsnl test",
+    "lint": "tsnl lint",
+    "lint:fix": "tsnt lint --fix"
+  },
+  "eslintConfig": {
+    "extends": "tie-app"
+  },
+  "prettier": {
+    "semi": false,
+    "tabWidth": 2,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "printWidth": 100
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "tsnl": "1.3.0",
+    "typescript": "^3.7.5"
+  },
+  "dependencies": {
+    "ts-morph": "^6.0.2"
+  }
+}
