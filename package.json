@@ -8,7 +8,8 @@
     "build": "tsnl build",
     "test": "tsnl test",
     "lint": "tsnl lint",
-    "lint:fix": "tsnt lint --fix"
+    "lint:fix": "tsnt lint --fix",
+    "release": "standard-version"
   },
   "eslintConfig": {
     "extends": "tie-app"
@@ -28,6 +29,7 @@
     "typescript": "^3.7.5"
   },
   "dependencies": {
+    "standard-version": "^7.1.0",
     "ts-morph": "^6.0.2"
   }
 }
