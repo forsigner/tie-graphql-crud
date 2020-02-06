@@ -2,7 +2,7 @@ import { Project, OptionalKind, MethodDeclarationStructure } from 'ts-morph'
 import path from 'path'
 import saveSourceFile from '../utils/saveSourceFile'
 
-export function generateRepository(objectName: string, baseDirPath: string) {
+export function generateRepository(objectName: string, baseDirPath: string, relations: string) {
   const modelName = objectName.charAt(0).toUpperCase() + objectName.slice(1)
   const project = new Project()
   const filePath = path.resolve(baseDirPath, 'generated', objectName, `${objectName}.repository.ts`)
@@ -14,7 +14,8 @@ export function generateRepository(objectName: string, baseDirPath: string) {
       paramType: `Query${modelName}Args`,
       returnType: `Promise<${modelName}>`,
       statments: `
-        const result = await this.${objectName}Repository.findOne(params)
+        const condition = { relations: ${relations}, where: params } as any
+        const result = await this.${objectName}Repository.findOne(condition)
         if (result) return result
         throw new BadRequest('未找到对象')
       `,
@@ -26,7 +27,8 @@ export function generateRepository(objectName: string, baseDirPath: string) {
       statments: `
         const { where = {}, first: take, skip, orderBy = 'id_ASC' } = params
         const order = { [orderBy.split('_')[0]]: orderBy.split('_')[1] }
-        return await this.${objectName}Repository.find({ where, take, skip, order })
+        const condition = { relations: ${relations}, where, take, skip, order } as any
+        return await this.${objectName}Repository.find(condition)
       `,
     },
     {

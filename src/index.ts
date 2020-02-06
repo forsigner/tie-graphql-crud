@@ -4,9 +4,9 @@ import { generateService } from './generator/service'
 
 export { generateResolver, generateRepository, generateService }
 
-export function generate(objectName: string) {
+export function generate(objectName: string, relations: string) {
   const baseDirPath = process.cwd()
-  generateRepository(objectName, baseDirPath)
+  generateRepository(objectName, baseDirPath, relations)
   generateService(objectName, baseDirPath)
   generateResolver(objectName, baseDirPath)
 }
