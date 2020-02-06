@@ -1,6 +1,6 @@
 {
   "name": "tie-graphql-crud",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "GraphQL Crud for Tie",
   "main": "dist/index.js",
   "scripts": {
