@@ -65,7 +65,8 @@ export function generateResolver(objectName: string, options: Options) {
       name: `updateMany${modelName}s`,
       type: 'Mutation',
       gqlType: `${modelName}`,
-      paramtype: `Update${modelName}Input`,
+
+      paramtype: `UpdateMany${modelName}Input`,
       returnType: `Promise<${modelName}>`,
       desc: '批量更新',
       method: 'update',
@@ -159,21 +160,20 @@ export function generateResolver(objectName: string, options: Options) {
     namedImports: [`${modelName}Aggregate`],
   })
 
-  // import input
-  sourceFile.addImportDeclaration({
-    moduleSpecifier: `@${objectName}/${objectName}.input`,
-    namedImports: [
-      `Create${modelName}Input`,
-      `Update${modelName}Input`,
-      `Delete${modelName}Input`,
-      `Upsert${modelName}Input`,
-    ],
-  })
-
   // import args
   sourceFile.addImportDeclaration({
     moduleSpecifier: `@${objectName}/${objectName}.args`,
-    namedImports: [`Query${modelName}Args`, `Query${modelName}sArgs`, `${modelName}AggregateArgs`],
+    namedImports: methodTypes
+      .filter(i => i.type === 'Query' && !excludes.includes(i.name))
+      .map(i => i.paramtype),
+  })
+
+  // import input
+  sourceFile.addImportDeclaration({
+    moduleSpecifier: `@${objectName}/${objectName}.input`,
+    namedImports: methodTypes
+      .filter(i => i.type === 'Mutation' && !excludes.includes(i.name))
+      .map(i => i.paramtype),
   })
 
   sourceFile.addClass({

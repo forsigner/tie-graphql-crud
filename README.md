@@ -5,7 +5,7 @@ GraphQL 增删改查自动化
 ## 用法
 
 ```js
-import { generate } from './tie-graphql-crud'
+import { generate } from 'tie-graphql-crud'
 
 generate('user', {
   relations: `['posts']`,
