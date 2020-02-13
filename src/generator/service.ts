@@ -1,8 +1,10 @@
 import { Project, OptionalKind, MethodDeclarationStructure } from 'ts-morph'
 import path from 'path'
 import saveSourceFile from '../utils/saveSourceFile'
+import { Options } from '../types'
 
-export function generateService(objectName: string, baseDirPath: string) {
+export function generateService(objectName: string, options: Options) {
+  const { baseDirPath = process.cwd() } = options
   const modelName = objectName.charAt(0).toUpperCase() + objectName.slice(1)
   const project = new Project()
   const filePath = path.resolve(baseDirPath, 'generated', objectName, `${objectName}.service.ts`)

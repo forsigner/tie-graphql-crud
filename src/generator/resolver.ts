@@ -1,8 +1,10 @@
 import { Project, OptionalKind, MethodDeclarationStructure } from 'ts-morph'
 import path from 'path'
 import saveSourceFile from '../utils/saveSourceFile'
+import { Options } from '../types'
 
-export function generateResolver(objectName: string, baseDirPath: string) {
+export function generateResolver(objectName: string, options: Options) {
+  const { baseDirPath = process.cwd(), excludes = [] } = options
   const modelName = objectName.charAt(0).toUpperCase() + objectName.slice(1)
   const project = new Project()
   const filePath = path.resolve(baseDirPath, 'generated', objectName, `${objectName}.resolver.ts`)
@@ -94,40 +96,42 @@ export function generateResolver(objectName: string, baseDirPath: string) {
     overwrite: true,
   })
 
-  const methods: OptionalKind<MethodDeclarationStructure>[] = methodTypes.map(
-    i =>
-      ({
-        name: i.name,
-        isAsync: true,
-        returnType: i.returnType,
-        decorators: [
-          {
-            name: i.type,
-            arguments: [
-              `() => ${i.gqlType}`,
-              `{
+  const methods: OptionalKind<MethodDeclarationStructure>[] = methodTypes
+    .filter(item => !excludes.includes(item.name))
+    .map(
+      i =>
+        ({
+          name: i.name,
+          isAsync: true,
+          returnType: i.returnType,
+          decorators: [
+            {
+              name: i.type,
+              arguments: [
+                `() => ${i.gqlType}`,
+                `{
               description: '${i.desc}' 
             }`,
-            ],
-          },
-        ],
-        parameters: [
-          {
-            name: 'args',
-            type: i.paramtype,
-            decorators: [
-              {
-                name: i.type === 'Query' ? 'Args' : 'Arg',
-                arguments: [i.type === 'Query' ? '' : '"input"'],
-              },
-            ],
-          },
-        ],
-        statements: `
+              ],
+            },
+          ],
+          parameters: [
+            {
+              name: 'args',
+              type: i.paramtype,
+              decorators: [
+                {
+                  name: i.type === 'Query' ? 'Args' : 'Arg',
+                  arguments: [i.type === 'Query' ? '' : '"input"'],
+                },
+              ],
+            },
+          ],
+          statements: `
           return await this.${objectName}Service.${i.method}(args)
         `,
-      } as OptionalKind<MethodDeclarationStructure>),
-  )
+        } as OptionalKind<MethodDeclarationStructure>),
+    )
 
   // import lib
   sourceFile.addImportDeclarations([
