@@ -4,7 +4,7 @@ import saveSourceFile from '../utils/saveSourceFile'
 import { Options } from '../types'
 
 export function generateRepository(objectName: string, options: Options) {
-  const { baseDirPath = process.cwd(), relations } = options
+  const { baseDirPath = process.cwd(), relations , moduleDir = `@${objectName}` } = options
   const modelName = objectName.charAt(0).toUpperCase() + objectName.slice(1)
   const project = new Project()
   const filePath = path.resolve(baseDirPath, 'generated', objectName, `${objectName}.repository.ts`)
@@ -140,13 +140,13 @@ export function generateRepository(objectName: string, options: Options) {
 
   // import type
   sourceFile.addImportDeclaration({
-    moduleSpecifier: `@${objectName}/${objectName}.type`,
+    moduleSpecifier: `${moduleDir}/${objectName}.type`,
     namedImports: [`${modelName}Aggregate`],
   })
 
   // import input
   sourceFile.addImportDeclaration({
-    moduleSpecifier: `@${objectName}/${objectName}.input`,
+    moduleSpecifier: `${moduleDir}/${objectName}.input`,
     namedImports: [
       `Create${modelName}Input`,
       `Update${modelName}Input`,
@@ -157,7 +157,7 @@ export function generateRepository(objectName: string, options: Options) {
 
   // import args
   sourceFile.addImportDeclaration({
-    moduleSpecifier: `@${objectName}/${objectName}.args`,
+    moduleSpecifier: `${moduleDir}/${objectName}.args`,
     namedImports: [`Query${modelName}Args`, `Query${modelName}sArgs`, `${modelName}AggregateArgs`],
   })
 

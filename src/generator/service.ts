@@ -4,7 +4,7 @@ import saveSourceFile from '../utils/saveSourceFile'
 import { Options } from '../types'
 
 export function generateService(objectName: string, options: Options) {
-  const { baseDirPath = process.cwd() } = options
+  const { baseDirPath = process.cwd(), moduleDir = `@${objectName}` } = options
   const modelName = objectName.charAt(0).toUpperCase() + objectName.slice(1)
   const project = new Project()
   const filePath = path.resolve(baseDirPath, 'generated', objectName, `${objectName}.service.ts`)
@@ -121,13 +121,13 @@ export function generateService(objectName: string, options: Options) {
 
   // import type
   sourceFile.addImportDeclaration({
-    moduleSpecifier: `@${objectName}/${objectName}.type`,
+    moduleSpecifier: `${moduleDir}/${objectName}.type`,
     namedImports: [`${modelName}Aggregate`],
   })
 
   // import input
   sourceFile.addImportDeclaration({
-    moduleSpecifier: `@${objectName}/${objectName}.input`,
+    moduleSpecifier: `${moduleDir}/${objectName}.input`,
     namedImports: [
       `Create${modelName}Input`,
       `Update${modelName}Input`,
@@ -138,7 +138,7 @@ export function generateService(objectName: string, options: Options) {
 
   // import args
   sourceFile.addImportDeclaration({
-    moduleSpecifier: `@${objectName}/${objectName}.args`,
+    moduleSpecifier: `${moduleDir}/${objectName}.args`,
     namedImports: [`Query${modelName}Args`, `Query${modelName}sArgs`, `${modelName}AggregateArgs`],
   })
 

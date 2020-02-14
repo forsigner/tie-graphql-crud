@@ -4,7 +4,7 @@ import saveSourceFile from '../utils/saveSourceFile'
 import { Options } from '../types'
 
 export function generateResolver(objectName: string, options: Options) {
-  const { baseDirPath = process.cwd(), excludes = [] } = options
+  const { baseDirPath = process.cwd(), excludes = [], moduleDir = `@${objectName}` } = options
   const modelName = objectName.charAt(0).toUpperCase() + objectName.slice(1)
   const project = new Project()
   const filePath = path.resolve(baseDirPath, 'generated', objectName, `${objectName}.resolver.ts`)
@@ -156,13 +156,13 @@ export function generateResolver(objectName: string, options: Options) {
 
   // import type
   sourceFile.addImportDeclaration({
-    moduleSpecifier: `@${objectName}/${objectName}.type`,
+    moduleSpecifier: `${moduleDir}/${objectName}.type`,
     namedImports: [`${modelName}Aggregate`],
   })
 
   // import args
   sourceFile.addImportDeclaration({
-    moduleSpecifier: `@${objectName}/${objectName}.args`,
+    moduleSpecifier: `${moduleDir}/${objectName}.args`,
     namedImports: methodTypes
       .filter(i => i.type === 'Query' && !excludes.includes(i.name))
       .map(i => i.paramtype),
@@ -170,7 +170,7 @@ export function generateResolver(objectName: string, options: Options) {
 
   // import input
   sourceFile.addImportDeclaration({
-    moduleSpecifier: `@${objectName}/${objectName}.input`,
+    moduleSpecifier: `${moduleDir}/${objectName}.input`,
     namedImports: methodTypes
       .filter(i => i.type === 'Mutation' && !excludes.includes(i.name))
       .map(i => i.paramtype),
