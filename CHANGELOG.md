@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5](https://github.com/forsigner/tie-graphql-crud/compare/v0.0.4...v0.0.5) (2020-02-14)
+
+
+### Features
+
+* 支持配置module dir ([e8681ee](https://github.com/forsigner/tie-graphql-crud/commit/e8681ee1540c0ebb7b538c853266e1ae722363bc))
+
 ### [0.0.4](https://github.com/forsigner/tie-graphql-crud/compare/v0.0.3...v0.0.4) (2020-02-13)
 
 
