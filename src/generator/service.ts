@@ -110,7 +110,7 @@ export function generateService(objectName: string, options: Options) {
   // import repository
   sourceFile.addImportDeclaration({
     moduleSpecifier: `./${objectName}.repository`,
-    namedImports: [`${modelName}Repository`],
+    namedImports: [`${modelName}CrudRepository`],
   })
 
   // import model
@@ -143,7 +143,7 @@ export function generateService(objectName: string, options: Options) {
   })
 
   sourceFile.addClass({
-    name: `${modelName}Service`,
+    name: `${modelName}CrudService`,
     isExported: true,
     decorators: [
       {
@@ -157,7 +157,7 @@ export function generateService(objectName: string, options: Options) {
         parameters: [
           {
             name: `private ${objectName}Repository`,
-            type: `${modelName}Repository`,
+            type: `${modelName}CrudRepository`,
           },
         ],
       },

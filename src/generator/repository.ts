@@ -162,7 +162,7 @@ export function generateRepository(objectName: string, options: Options) {
   })
 
   sourceFile.addClass({
-    name: `${modelName}Repository`,
+    name: `${modelName}CrudRepository`,
     isExported: true,
     decorators: [
       {

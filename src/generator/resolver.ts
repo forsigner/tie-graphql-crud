@@ -145,7 +145,7 @@ export function generateResolver(objectName: string, options: Options) {
   // import service
   sourceFile.addImportDeclaration({
     moduleSpecifier: `./${objectName}.service`,
-    namedImports: [`${modelName}Service`],
+    namedImports: [`${modelName}CrudService`],
   })
 
   // import model
@@ -191,7 +191,7 @@ export function generateResolver(objectName: string, options: Options) {
         parameters: [
           {
             name: `private ${objectName}Service`,
-            type: `${modelName}Service`,
+            type: `${modelName}CrudService`,
           },
         ],
       },
