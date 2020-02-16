@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.6](https://github.com/forsigner/tie-graphql-crud/compare/v0.0.5...v0.0.6) (2020-02-16)
+
+
+### Features
+
+* rename service name ([45e4b04](https://github.com/forsigner/tie-graphql-crud/commit/45e4b049e13689e0036a808f769591bd75079b96))
+
 ### [0.0.5](https://github.com/forsigner/tie-graphql-crud/compare/v0.0.4...v0.0.5) (2020-02-14)
 
 
